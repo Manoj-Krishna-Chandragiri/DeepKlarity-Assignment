@@ -11,14 +11,14 @@ backend/*.pyc
 backend/quiz.db
 backend/app/__pycache__/
 backend/.env
+venv/
 
 # Frontend
 frontend/node_modules/
 frontend/dist/
 frontend/.env
 frontend/.env.local
-frontend_new/node_modules/
-frontend_new/dist/
+node_modules/
 
 # IDE
 .vscode/
