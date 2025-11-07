@@ -134,5 +134,12 @@ def get_quiz(quiz_id: int):
 
 
 # Serve React frontend static files
+# Try both paths: local dev (backend/static) and Docker (/app/backend/static)
+static_dir = None
 if os.path.exists("backend/static"):
-    app.mount("/", StaticFiles(directory="backend/static", html=True), name="static")
+    static_dir = "backend/static"
+elif os.path.exists("/app/backend/static"):
+    static_dir = "/app/backend/static"
+
+if static_dir:
+    app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
