@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from typing import Dict, Any, List
 import re
+import random
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; DeepKlarityBot/1.0)"}
 
@@ -56,12 +57,15 @@ def generate_quiz_fallback(text: str, title: str, num_questions: int = 5) -> Lis
         correct = candidates[i]
         q = f"According to the article, which of the following statements about \"{title}\" is correct?"
         options = [correct]
-        # create simple distractors (truncated/modified versions) - clearly wrong but acceptable for demo
+        # create simple distractors from other candidate sentences
         for j in range(3):
-            distractor = f"{' '.join(correct.split()[:max(4, 6-j)])}..."
+            if i + j + 1 < len(candidates):
+                distractor = candidates[i + j + 1]
+            else:
+                distractor = candidates[i - j - 1] if i - j - 1 >= 0 else candidates[0]
             options.append(distractor)
         # Shuffle options to avoid answer always first
-        # but to keep deterministic order we won't randomize; if you want randomness import random.shuffle
+        random.shuffle(options)
         answer = correct
         out.append({
             "question": q,

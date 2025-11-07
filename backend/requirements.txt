@@ -1,8 +1,8 @@
-fastapi
-uvicorn
-sqlalchemy
-pydantic
-requests
-beautifulsoup4
-langchain
-openai
+fastapi>=0.85.0
+uvicorn[standard]>=0.18.0
+sqlalchemy>=1.4
+pydantic>=1.10
+requests>=2.28
+beautifulsoup4>=4.11
+langchain>=0.0.0
+openai>=0.27.0
