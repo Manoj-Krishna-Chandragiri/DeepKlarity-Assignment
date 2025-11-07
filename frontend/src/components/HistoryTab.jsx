@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
+// API base URL - works on both localhost and production
+const API_BASE = window.location.origin
+
 export default function HistoryTab() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
@@ -10,7 +13,7 @@ export default function HistoryTab() {
   async function fetchList() {
     setLoading(true)
     try {
-      const res = await fetch('/api/history')
+      const res = await fetch(`${API_BASE}/history`)
       if (!res.ok) throw new Error('Failed to fetch')
       const data = await res.json()
       setItems(data)
@@ -23,7 +26,7 @@ export default function HistoryTab() {
 
   async function showDetails(id) {
     try {
-      const res = await fetch(`/api/quiz/${id}`)
+      const res = await fetch(`${API_BASE}/quiz/${id}`)
       const data = await res.json()
       setSelected(data)
     } catch (e) { console.error(e) }

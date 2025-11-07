@@ -1,11 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Any, Dict
 from .db import SessionLocal, engine, Base
 from . import models
 from .utils import scrape_wikipedia, generate_quiz_fallback
 import json
+import os
 
 # Create app
 app = FastAPI(title="AI Wiki Quiz Generator")
@@ -129,3 +131,8 @@ def get_quiz(quiz_id: int):
         return {"id": it.id, "url": it.url, "title": it.title, "summary": it.summary, "full_quiz_data": data}
     finally:
         db.close()
+
+
+# Serve React frontend static files
+if os.path.exists("backend/static"):
+    app.mount("/", StaticFiles(directory="backend/static", html=True), name="static")

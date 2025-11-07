@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+// API base URL - works on both localhost and production
+const API_BASE = window.location.origin
+
 export default function GenerateQuizTabNew() {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
@@ -27,7 +30,7 @@ export default function GenerateQuizTabNew() {
     if (!validUrl(url)) return setError('Please enter a valid Wikipedia URL (e.g., https://en.wikipedia.org/wiki/Alan_Turing)')
     setLoading(true)
     try {
-      const res = await fetch('/api/generate_quiz/', {
+      const res = await fetch(`${API_BASE}/generate_quiz/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url })
